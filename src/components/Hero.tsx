@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Play, Pause, Music, Disc3, ExternalLink, ShoppingCart, Heart, Share2, Volume2 } from 'lucide-react';
+import { Play, Pause, Music, Disc3, ShoppingCart, Heart, Share2, Volume2 } from 'lucide-react';
 import { useAudioPlayer } from '../contexts/AudioPlayerContext';
 
 const Hero = () => {

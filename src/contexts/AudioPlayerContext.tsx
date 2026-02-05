@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useRef, useCallback } from 'react';
+import React, { createContext, useContext, useState, useRef, useCallback, useEffect } from 'react';
 
 interface Track {
   id: string;
@@ -159,6 +159,13 @@ export const AudioPlayerProvider: React.FC<AudioPlayerProviderProps> = ({ childr
     setIsPlaying(false);
   }, []);
 
+  // Set initial volume on audio element
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, []);
+
   return (
     <AudioPlayerContext.Provider
       value={{
@@ -194,7 +201,6 @@ export const AudioPlayerProvider: React.FC<AudioPlayerProviderProps> = ({ childr
           onTimeUpdate={(e) => setCurrentTime(e.currentTarget.currentTime)}
           onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
           onEnded={nextTrack}
-          volume={volume}
         />
       )}
     </AudioPlayerContext.Provider>

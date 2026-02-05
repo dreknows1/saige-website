@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { ShoppingCart, Download, Music, Disc, Check, CreditCard, Lock, Package } from 'lucide-react';
 import { useAudioPlayer } from '../contexts/AudioPlayerContext';
 
-interface Track {
+// Store Track type (extends player track with store-specific fields)
+interface StoreTrack {
   id: string;
   title: string;
   artist: string;
@@ -24,7 +25,7 @@ interface Album {
   tracks: number;
   price: number;
   description: string;
-  trackList: Track[];
+  trackList: StoreTrack[];
 }
 
 const albums: Album[] = [
@@ -78,7 +79,7 @@ const albums: Album[] = [
   }
 ];
 
-const individualTracks: Track[] = [
+const individualTracks: StoreTrack[] = [
   { id: 'track-1', title: 'So Dope', artist: 'Saige', album: 'Singles', cover: '/assets/images/promo-1.png', duration: '4:06', price: 1.29, spotifyUrl: '#', appleUrl: '#' },
   { id: 'track-2', title: 'Me Gustas', artist: 'Saige', album: 'Singles', cover: '/assets/images/promo-2.png', duration: '4:19', price: 1.29, spotifyUrl: '#', appleUrl: '#' },
   { id: 'track-3', title: 'Right There', artist: 'Saige', album: 'Singles', cover: '/assets/images/promo-3.png', duration: '3:57', price: 1.29, spotifyUrl: '#', appleUrl: '#' },
@@ -89,13 +90,13 @@ const individualTracks: Track[] = [
 
 const MusicStore = () => {
   const [activeTab, setActiveTab] = useState<'albums' | 'tracks'>('albums');
-  const [cart, setCart] = useState<(Track | Album)[]>([]);
+  const [cart, setCart] = useState<(StoreTrack | Album)[]>([]);
   const [showCheckout, setShowCheckout] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [purchaseComplete, setPurchaseComplete] = useState(false);
   const { playTrack } = useAudioPlayer();
 
-  const addToCart = (item: Track | Album) => {
+  const addToCart = (item: StoreTrack | Album) => {
     setCart(prev => {
       if (prev.find(i => i.id === item.id)) return prev;
       return [...prev, item];
@@ -189,11 +190,8 @@ const MusicStore = () => {
                             album: album.title,
                             cover: album.cover,
                             audioUrl: '',
-                            duration: album.trackList[0]?.duration || '3:45',
-                            price: album.price,
-                            spotifyUrl: '#',
-                            appleUrl: '#'
-                          })}
+                            duration: album.trackList[0]?.duration || '3:45'
+                          } as any)}
                           className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                         >
                           <div className="w-12 h-12 rounded-full bg-neon-pink flex items-center justify-center">
@@ -269,7 +267,15 @@ const MusicStore = () => {
                           className="w-full h-full object-cover"
                         />
                         <button 
-                          onClick={() => playTrack(track)}
+                          onClick={() => playTrack({
+                            id: track.id,
+                            title: track.title,
+                            artist: track.artist,
+                            album: track.album,
+                            cover: track.cover,
+                            audioUrl: track.previewUrl || '',
+                            duration: track.duration
+                          } as any)}
                           className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                         >
                           <Music className="w-5 h-5 text-white" />
