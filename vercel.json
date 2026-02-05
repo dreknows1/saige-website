@@ -1,0 +1,23 @@
+{
+  "name": "saige-musik-website",
+  "version": 2,
+  "public": true,
+  "github": {
+    "enabled": false
+  },
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
