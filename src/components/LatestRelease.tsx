@@ -1,9 +1,22 @@
-import { Play, Pause, Heart, Share2, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
+import { Play, Pause, Heart, Share2, ExternalLink } from 'lucide-react';
 
 const LatestRelease = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+
+  // Latest release data
+  const latestRelease = {
+    title: "Heartbreaks Algorithm",
+    year: "2025",
+    type: "Album",
+    tracks: 16,
+    duration: "1 hr",
+    cover: "/assets/album-covers/the-audacity.png",
+    description: "The debut album from Saige - a 16-track journey through digital heartbreak, featuring Acts 1-3, skits and soulful R&B tracks.",
+    spotifyUrl: "https://open.spotify.com/album/75ONs0kRj8oOTTmSKm9At8",
+    appleUrl: "https://music.apple.com/album/heartbreaks-algorithm",
+  };
 
   return (
     <section id="latest" className="relative py-32 px-6 lg:px-12">
@@ -29,8 +42,8 @@ const LatestRelease = () => {
               {/* Artwork container */}
               <div className="relative rounded-2xl overflow-hidden glass-neon">
                 <img 
-                  src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=800&h=800&fit=crop"
-                  alt="Neural Dreams Album Art"
+                  src={latestRelease.cover}
+                  alt={latestRelease.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 
@@ -63,13 +76,13 @@ const LatestRelease = () => {
               {/* Track details */}
               <div className="mb-8">
                 <span className="inline-block px-3 py-1 rounded-full bg-neon-pink/20 text-neon-pink font-tech text-xs tracking-wider uppercase mb-4">
-                  Single
+                  {latestRelease.type}
                 </span>
                 <h3 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">
-                  Neural Dreams
+                  {latestRelease.title}
                 </h3>
                 <p className="font-body text-lg text-white/60">
-                  sAIge • 2024
+                  Saige • {latestRelease.year} • {latestRelease.tracks} tracks • {latestRelease.duration}
                 </p>
               </div>
 
@@ -93,8 +106,8 @@ const LatestRelease = () => {
               {/* Progress bar */}
               <div className="mb-8">
                 <div className="flex items-center justify-between font-tech text-xs text-white/40 mb-2">
-                  <span>0:42</span>
-                  <span>3:24</span>
+                  <span>Act 1: The Birth</span>
+                  <span>Album Preview</span>
                 </div>
                 <div className="h-1 bg-white/10 rounded-full overflow-hidden">
                   <div className="h-full w-1/5 bg-gradient-to-r from-neon-pink to-neon-violet rounded-full" />
@@ -103,13 +116,15 @@ const LatestRelease = () => {
 
               {/* Action buttons */}
               <div className="flex items-center gap-4 mb-8">
-                <button 
-                  onClick={() => setIsPlaying(!isPlaying)}
+                <a 
+                  href={latestRelease.spotifyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex-1 flex items-center justify-center gap-3 px-6 py-4 bg-neon-pink text-white font-tech text-sm tracking-widest uppercase btn-neon glow-pink"
                 >
-                  {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
-                  {isPlaying ? 'Pause' : 'Play Now'}
-                </button>
+                  <Play className="w-5 h-5" />
+                  Listen Now
+                </a>
                 
                 <button 
                   onClick={() => setIsLiked(!isLiked)}
@@ -133,14 +148,17 @@ const LatestRelease = () => {
                   Listen on
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  {['Spotify', 'Apple Music', 'YouTube', 'SoundCloud'].map((platform) => (
-                    <button 
+                  {['Spotify', 'Apple Music', 'YouTube', 'Tidal'].map((platform) => (
+                    <a 
                       key={platform}
+                      href={latestRelease.spotifyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-white/70 hover:border-neon-cyan hover:text-neon-cyan transition-all duration-300"
                     >
                       {platform}
                       <ExternalLink className="w-3 h-3" />
-                    </button>
+                    </a>
                   ))}
                 </div>
               </div>

@@ -15,9 +15,9 @@ const Hero = () => {
     album: 'Heartbreaks Algorithm',
     cover: '/assets/album-covers/the-audacity.png',
     audioUrl: '/assets/audio/heartbreaks-algorithm.mp3',
-    duration: '3:45',
-    description: 'The latest single from Saige - a soulful journey through digital heartbreak',
-    price: 1.29,
+    duration: '1 hr',
+    description: 'The debut album from Saige - 16 tracks of soulful R&B exploring love, loss, and healing',
+    price: 12.99,
     spotifyUrl: 'https://open.spotify.com/album/75ONs0kRj8oOTTmSKm9At8',
     appleUrl: 'https://music.apple.com/album/heartbreaks-algorithm',
   };

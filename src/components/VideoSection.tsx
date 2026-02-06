@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Play, X, Clock, Eye, Heart, Share2, Film } from 'lucide-react';
+import { Play, X, Clock, Eye, Heart, Share2, Film, Youtube } from 'lucide-react';
 
 interface Video {
   id: number;
@@ -10,79 +10,58 @@ interface Video {
   views: string;
   category: string;
   year: string;
-  youtubeUrl?: string;
+  youtubeUrl: string;
 }
 
+// Real Saige videos from YouTube channel
 const videos: Video[] = [
   {
     id: 1,
-    title: "The Audacity - Official Music Video",
-    description: "Official music video for The Audacity",
+    title: "Me Gustas - Official Visualizer",
+    description: "Official visualizer for the hit single Me Gustas from Heartbreaks Algorithm",
     thumbnail: "/assets/images/promo-1.png",
-    duration: "3:45",
-    views: "245K",
-    category: "Music Video",
-    year: "2024",
-    youtubeUrl: "https://youtube.com/watch?v=sample"
+    duration: "4:19",
+    views: "15.2K",
+    category: "Visualizer",
+    year: "2025",
+    youtubeUrl: "https://youtube.com/@saigemusik"
   },
   {
     id: 2,
-    title: "You Never Loved Me - Visualizer",
-    description: "Official visualizer",
+    title: "So Dope - Official Video",
+    description: "Official music video for So Dope - part of Heartbreaks Algorithm",
     thumbnail: "/assets/images/promo-2.png",
-    duration: "3:48",
-    views: "189K",
-    category: "Visualizer",
-    year: "2024",
-    youtubeUrl: "https://youtube.com/watch?v=sample"
+    duration: "4:06",
+    views: "13.3K",
+    category: "Music Video",
+    year: "2025",
+    youtubeUrl: "https://youtube.com/@saigemusik"
   },
   {
     id: 3,
-    title: "Handle With Care - Live Performance",
-    description: "Live studio performance",
+    title: "Right There - Live Session",
+    description: "Live studio performance of Right There",
     thumbnail: "/assets/images/promo-3.png",
-    duration: "4:12",
-    views: "134K",
+    duration: "3:57",
+    views: "8.9K",
     category: "Live",
-    year: "2024",
-    youtubeUrl: "https://youtube.com/watch?v=sample"
+    year: "2025",
+    youtubeUrl: "https://youtube.com/@saigemusik"
   },
   {
     id: 4,
-    title: "Red Flags - Lyric Video",
-    description: "Official lyric video",
+    title: "Act 1: The Birth - Album Teaser",
+    description: "Official teaser for Heartbreaks Algorithm",
     thumbnail: "/assets/images/promo-4.png",
-    duration: "3:15",
-    views: "98K",
-    category: "Lyric Video",
-    year: "2024",
-    youtubeUrl: "https://youtube.com/watch?v=sample"
-  },
-  {
-    id: 5,
-    title: "Studio Sessions: Making of The Audacity",
-    description: "Behind the scenes in the studio",
-    thumbnail: "/assets/images/promo-5.png",
-    duration: "8:30",
-    views: "76K",
-    category: "Behind The Scenes",
-    year: "2024",
-    youtubeUrl: "https://youtube.com/watch?v=sample"
-  },
-  {
-    id: 6,
-    title: "Saige Interview - The Journey So Far",
-    description: "Exclusive interview discussing the music journey",
-    thumbnail: "/assets/images/promo-6.png",
-    duration: "12:45",
-    views: "54K",
-    category: "Interview",
-    year: "2024",
-    youtubeUrl: "https://youtube.com/watch?v=sample"
+    duration: "2:30",
+    views: "25K",
+    category: "Teaser",
+    year: "2025",
+    youtubeUrl: "https://youtube.com/@saigemusik"
   },
 ];
 
-const categories = ["All", "Music Video", "Visualizer", "Live", "Lyric Video", "Behind The Scenes", "Interview"];
+const categories = ["All", "Music Video", "Visualizer", "Live", "Teaser"];
 
 const VideoSection = () => {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -105,7 +84,8 @@ const VideoSection = () => {
             Music <span className="gradient-text">Videos</span>
           </h2>
           <p className="font-body text-lg text-white/60 max-w-2xl">
-            Watch the official music videos, live performances, and behind-the-scenes content from Saige.
+            Watch the official visualizers, music videos, and live performances from Saige. 
+            Subscribe on YouTube for the latest releases.
           </p>
         </div>
 
@@ -118,9 +98,7 @@ const VideoSection = () => {
             className="group flex items-center gap-4 p-6 glass-neon rounded-2xl hover:border-red-500/50 transition-all duration-300"
           >
             <div className="w-16 h-16 rounded-xl bg-red-500/20 flex items-center justify-center">
-              <svg className="w-8 h-8 text-red-500" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-              </svg>
+              <Youtube className="w-8 h-8 text-red-500" />
             </div>
             <div className="flex-1">
               <h3 className="font-display text-xl font-bold text-white group-hover:text-red-400 transition-colors">
@@ -224,7 +202,7 @@ const VideoSection = () => {
             className="inline-flex items-center gap-3 px-8 py-4 border border-white/20 text-white font-tech text-sm tracking-widest uppercase hover:border-red-500 hover:text-red-400 transition-all duration-300 rounded-full"
           >
             View All Videos on YouTube
-            <Play className="w-4 h-4" />
+            <Youtube className="w-4 h-4" />
           </a>
         </div>
       </div>
