@@ -52,8 +52,6 @@ const GlobalAudioPlayer = () => {
     }
   }, [currentTrack, isPlaying]);
 
-  if (!currentTrack) return null;
-
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (progressRef.current) {
       const rect = progressRef.current.getBoundingClientRect();
@@ -77,7 +75,8 @@ const GlobalAudioPlayer = () => {
 
   return (
     <>
-      {/* Main Player Bar */}
+      {/* Main Player Bar - Only show when track is playing */}
+      {currentTrack && (
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-void/95 backdrop-blur-xl border-t border-white/10">
         {/* Progress Bar */}
         <div 
@@ -222,9 +221,10 @@ const GlobalAudioPlayer = () => {
           </div>
         </div>
       </div>
+      )}
 
-      {/* Playlist Panel */}
-      {showPlaylist && (
+      {/* Playlist Panel - Only show when player is active */}
+      {currentTrack && showPlaylist && (
         <div className="fixed bottom-24 right-4 lg:right-6 z-50 w-80 glass-neon rounded-2xl overflow-hidden">
           <div className="p-4 border-b border-white/10 flex items-center justify-between">
             <h3 className="font-display text-sm font-bold text-white">Queue ({playlist.length})</h3>
@@ -271,7 +271,7 @@ const GlobalAudioPlayer = () => {
         </div>
       )}
 
-      {/* Spacer for fixed player */}
+      {/* Spacer for fixed player - always reserve space */}
       <div className="h-20" />
     </>
   );
