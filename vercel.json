@@ -1,5 +1,5 @@
 {
-  "name": "saige-artist-website",
+  "name": "saige-website",
   "version": 2,
   "public": true,
   "framework": "vite",
@@ -7,6 +7,10 @@
   "outputDirectory": "dist",
   "installCommand": "npm install",
   "routes": [
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
     {
       "src": "/(.*)",
       "dest": "/index.html"
