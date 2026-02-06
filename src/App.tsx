@@ -4,10 +4,11 @@ import Admin from './pages/Admin';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/">
       <Routes>
         <Route path="/admin" element={<Admin />} />
-        <Route path="/*" element={<MainSite />} />
+        <Route path="/admin/*" element={<Admin />} />
+        <Route path="*" element={<MainSite />} />
       </Routes>
     </Router>
   );
