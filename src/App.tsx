@@ -9,6 +9,7 @@ import About from './components/About';
 import ConnectSection from './components/ConnectSection';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
+import GlobalAudioPlayer from './components/GlobalAudioPlayer';
 
 function App() {
   useEffect(() => {
@@ -59,6 +60,9 @@ function App() {
       
       {/* Footer */}
       <Footer />
+      
+      {/* Global Audio Player */}
+      <GlobalAudioPlayer />
       
       {/* Ambient glow orbs */}
       <div className="fixed top-1/4 -left-32 w-64 h-64 bg-neon-pink/20 rounded-full blur-[120px] pointer-events-none animate-pulse-slow" />
