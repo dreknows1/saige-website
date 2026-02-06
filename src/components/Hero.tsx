@@ -1,20 +1,17 @@
 import { useState, useEffect } from 'react';
-import { Play, Pause, Music, Disc3, ShoppingCart, Heart, Share2, Volume2 } from 'lucide-react';
-import { useAudioPlayer } from '../contexts/AudioPlayerContext';
+import { Play, Music, Disc3, ShoppingCart, Heart, Share2, Volume2 } from 'lucide-react';
 
 const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  const { playTrack, currentTrack, isPlaying, togglePlay } = useAudioPlayer();
 
-  // Current single data - "Heartbreaks Algorithm" is the latest release
+  // Current release data
   const currentSingle = {
     id: 'heartbreaks-algorithm',
     title: 'Heartbreaks Algorithm',
     artist: 'Saige',
     album: 'Heartbreaks Algorithm',
     cover: '/assets/album-covers/the-audacity.png',
-    audioUrl: '/assets/audio/heartbreaks-algorithm.mp3',
     duration: '1 hr',
     description: 'The debut album from Saige - 16 tracks of soulful R&B exploring love, loss, and healing',
     price: 12.99,
@@ -25,17 +22,6 @@ const Hero = () => {
   useEffect(() => {
     setIsVisible(true);
   }, []);
-
-  const isCurrentTrack = currentTrack?.id === currentSingle.id;
-  const isCurrentlyPlaying = isCurrentTrack && isPlaying;
-
-  const handlePlay = () => {
-    if (isCurrentTrack) {
-      togglePlay();
-    } else {
-      playTrack(currentSingle);
-    }
-  };
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -95,22 +81,15 @@ const Hero = () => {
 
               {/* CTA Buttons */}
               <div className="flex flex-wrap gap-4">
-                <button 
-                  onClick={handlePlay}
+                <a 
+                  href={currentSingle.spotifyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group flex items-center gap-3 px-8 py-4 bg-neon-pink text-white font-tech text-sm tracking-widest uppercase rounded-full hover:glow-pink transition-all duration-300 hover:scale-105"
                 >
-                  {isCurrentlyPlaying ? (
-                    <>
-                      <Pause className="w-5 h-5" />
-                      Pause
-                    </>
-                  ) : (
-                    <>
-                      <Play className="w-5 h-5 ml-0.5" />
-                      Play Now
-                    </>
-                  )}
-                </button>
+                  <Play className="w-5 h-5 ml-0.5" />
+                  Listen Now
+                </a>
                 
                 <a 
                   href={currentSingle.spotifyUrl}
@@ -146,7 +125,7 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* Right: Featured Media Player */}
+            {/* Right: Album Art - NO PLAYER */}
             <div 
               className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'}`}
               onMouseEnter={() => setIsHovering(true)}
@@ -156,7 +135,7 @@ const Hero = () => {
                 {/* Glow Effect */}
                 <div className="absolute -inset-4 bg-gradient-to-r from-neon-pink/20 via-neon-violet/20 to-neon-cyan/20 rounded-3xl blur-2xl opacity-50" />
                 
-                {/* Album Art Card */}
+                {/* Album Art Card - Static Image Only */}
                 <div className="relative glass-neon rounded-3xl overflow-hidden">
                   <div className="aspect-square relative">
                     <img 
@@ -165,30 +144,20 @@ const Hero = () => {
                       className={`w-full h-full object-cover transition-transform duration-700 ${isHovering ? 'scale-110' : 'scale-100'}`}
                     />
                     
-                    {/* Play Overlay */}
-                    <div className={`absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity duration-300 ${isHovering || isCurrentlyPlaying ? 'opacity-100' : 'opacity-0'}`}>
-                      <button 
-                        onClick={handlePlay}
+                    {/* Hover Overlay with External Link */}
+                    <div className={`absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity duration-300 ${isHovering ? 'opacity-100' : 'opacity-0'}`}>
+                      <a 
+                        href={currentSingle.spotifyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="w-20 h-20 rounded-full bg-neon-pink flex items-center justify-center text-white hover:scale-110 transition-transform shadow-[0_0_40px_rgba(255,0,110,0.5)]"
                       >
-                        {isCurrentlyPlaying ? (
-                          <Pause className="w-8 h-8" />
-                        ) : (
-                          <Play className="w-8 h-8 ml-1" />
-                        )}
-                      </button>
+                        <Play className="w-8 h-8 ml-1" />
+                      </a>
                     </div>
-
-                    {/* Now Playing Indicator */}
-                    {isCurrentlyPlaying && (
-                      <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-neon-pink/80 text-white font-tech text-xs tracking-wider flex items-center gap-2">
-                        <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                        NOW PLAYING
-                      </div>
-                    )}
                   </div>
 
-                  {/* Track Info Bar */}
+                  {/* Track Info Bar - NO PLAY BUTTON */}
                   <div className="p-6 bg-void/50">
                     <div className="flex items-center justify-between mb-4">
                       <div>
@@ -198,24 +167,17 @@ const Hero = () => {
                       <span className="font-tech text-sm text-white/40">{currentSingle.duration}</span>
                     </div>
 
-                    {/* Action Buttons */}
+                    {/* Action Buttons - External Links Only */}
                     <div className="flex items-center gap-3">
-                      <button 
-                        onClick={handlePlay}
+                      <a 
+                        href={currentSingle.spotifyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-neon-pink text-white font-tech text-sm tracking-wider rounded-xl hover:glow-pink transition-all"
                       >
-                        {isCurrentlyPlaying ? (
-                          <>
-                            <Pause className="w-4 h-4" />
-                            PAUSE
-                          </>
-                        ) : (
-                          <>
-                            <Play className="w-4 h-4" />
-                            PLAY
-                          </>
-                        )}
-                      </button>
+                        <Play className="w-4 h-4" />
+                        LISTEN
+                      </a>
                       
                       <button className="p-3 rounded-xl bg-white/5 text-white/60 hover:text-neon-pink hover:bg-white/10 transition-all">
                         <Heart className="w-5 h-5" />
@@ -250,7 +212,7 @@ const Hero = () => {
                         className="text-white/40 hover:text-[#FA2D48] transition-colors"
                       >
                         <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 00-1.877-.726 10.496 10.496 0 00-1.564-.15c-.04-.003-.083-.01-.124-.013H5.986c-.152.01-.303.017-.455.026-.747.043-1.49.123-2.196.364-1.29.443-2.188 1.246-2.779 2.534-.246.526-.407 1.074-.496 1.638-.085.545-.12 1.096-.13 1.647-.002.12-.004.242.004.362.02.387.04.774.078 1.16.058.627.168 1.24.334 1.838.327 1.13.9 2.096 1.78 2.838.596.502 1.27.88 2.018 1.133.888.306 1.81.455 2.745.512.668.04 1.335.036 2.003.006.178-.008.357-.024.536-.035.052-.003.104-.003.156-.01.148-.018.295-.04.443-.055.47-.05.936-.12 1.395-.224.864-.197 1.667-.52 2.38-1.02.072-.052.143-.106.24-.178l-.013-.022c-.178-.1-.35-.207-.538-.29-.77-.35-1.565-.61-2.398-.766a9.03 9.03 0 00-1.836-.167c-.643.007-1.277.084-1.897.255-1.042.287-1.935.796-2.655 1.59-.14.158-.268.327-.424.519-.188-.166-.353-.317-.51-.466a5.07 5.07 0 01-.69-.835c-.356-.547-.57-1.14-.65-1.774-.062-.48-.058-.963-.016-1.446.05-.574.178-1.13.403-1.66.3-.7.735-1.304 1.33-1.79.84-.69 1.797-1.066 2.86-1.208.74-.098 1.48-.09 2.214.038.89.16 1.73.437 2.53.826.3.146.588.312.882.47l.027-.03c-.294-.37-.59-.738-.88-1.112-.523-.678-1.02-1.373-1.46-2.108-.33-.55-.614-1.12-.816-1.73-.103-.305-.18-.617-.243-.934-.033-.17-.06-.343-.09-.515l-.003.003c-.003-.018-.01-.036-.01-.053-.002-.087-.013-.173-.012-.26.003-.19.02-.378.056-.564.108-.576.374-1.062.826-1.445.356-.303.767-.49 1.216-.575.448-.084.895-.073 1.334.048.544.156 1.003.446 1.375.867.373.42.623.907.756 1.44.124.494.166 1 .137 1.51-.04.66-.17 1.303-.385 1.925-.363 1.03-.91 1.973-1.58 2.863-.347.465-.724.906-1.118 1.336-.156.17-.316.335-.487.517.19.088.362.16.528.24.657.32 1.274.7 1.84 1.144.842.664 1.527 1.447 2.06 2.358.44.757.75 1.56.927 2.41.152.73.2 1.47.148 2.215-.04.58-.12 1.153-.284 1.71-.316 1.063-.86 1.96-1.647 2.686-.657.607-1.413 1.057-2.26 1.36-.733.263-1.49.427-2.27.495-.587.05-1.176.07-1.765.05-.517-.02-1.032-.06-1.54-.13-.957-.135-1.885-.36-2.776-.73-1.073-.456-2.02-1.07-2.823-1.89-.906-.926-1.553-2.01-1.93-3.227-.316-1.02-.433-2.07-.362-3.13.043-.66.136-1.312.31-1.95.27-.99.7-1.9 1.306-2.73.772-1.07 1.74-1.918 2.92-2.53.86-.44 1.77-.733 2.726-.874.48-.07.964-.104 1.45-.1.58.003 1.153.058 1.72.155.76.135 1.496.34 2.21.614.33.123.654.263.996.404z"/>
+                          <path d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 00-1.877-.726 10.496 10.496 0 00-1.564-.15c-.04-.003-.083-.01-.124-.013H5.986c-.152.01-.303.017-.455.026-.747.043-1.49.123-2.196.364-1.29.443-2.188 1.246-2.779 2.534-.246.526-.407 1.074-.496 1.638-.085.545-.12 1.096-.13 1.647-.002.12-.004.242.004.362.02.387.04.774.078 1.16.058.627.168 1.24.334 1.838.327 1.13.9 2.096 1.78 2.838.596.502 1.27.88 2.018 1.133.888.306 1.81.455 2.745.512.668.04 1.335.036 2.003.006.178-.008.357-.024.536-.035.052-.003.104-.003.156-.01.148-.018.295-.04.443-.055.47-.05.936-.12 1.395-.224.864-.197 1.667-.52 2.38-1.02.072-.052.143-.106.24-.178l-.013-.022c-.178-.1-.35-.207-.538-.29-.77-.35-1.565-.61-2.398-.766a9.03 9.03 0 00-1.836-.167c-.643.007-1.277.084-1.897.255-1.042.287-1.935.796-2.655 1.59-.14.158-.268.327-.424.519-.188-.166-.353-.317-.51-.466a5.07 5.07 0 01-.69-.835c-.356-.547-.57-1.14-.65-1.774-.062-.48-.058-.963-.016-1.446.05-.574.178-1.13.403-1.66.3-.7.735-1.304 1.33-1.79.84-.69 1.797-1.066 2.86-1.208.74-.098 1.48-.09 2.214.038.89.16 1.73.437 2.53.826.3.146.588.312.882.47l-.027-.03c-.294-.37-.59-.738-.88-1.112-.523-.678-1.02-1.373-1.46-2.108-.33-.55-.614-1.12-.816-1.73-.103-.305-.18-.617-.243-.934-.033-.17-.06-.343-.09-.515l-.003.003c-.003-.018-.01-.036-.01-.053-.002-.087-.013-.173-.012-.26.003-.19.02-.378.056-.564.108-.576.374-1.062.826-1.445.356-.303.767-.49 1.216-.575.448-.084.895-.073 1.334.048.544.156 1.003.446 1.375.867.373.42.623.907.756 1.44.124.494.166 1 .137 1.51-.04.66-.17 1.303-.385 1.925-.363 1.03-.91 1.973-1.58 2.863-.347.465-.724.906-1.118 1.336-.156.17-.316.335-.487.517.19.088.362.16.528.24.657.32 1.274.7 1.84 1.144.842.664 1.527 1.447 2.06 2.358.44.757.75 1.56.927 2.41.152.73.2 1.47.148 2.215-.04.58-.12 1.153-.284 1.71-.316 1.063-.86 1.96-1.647 2.686-.657.607-1.413 1.057-2.26 1.36-.733.263-1.49.427-2.27.495-.587.05-1.176.07-1.765.05-.517-.02-1.032-.06-1.54-.13-.957-.135-1.885-.36-2.776-.73-1.073-.456-2.02-1.07-2.823-1.89-.906-.926-1.553-2.01-1.93-3.227-.316-1.02-.433-2.07-.362-3.13.043-.66.136-1.312.31-1.95.27-.99.7-1.9 1.306-2.73.772-1.07 1.74-1.918 2.92-2.53.86-.44 1.77-.733 2.726-.874.48-.07.964-.104 1.45-.1.58.003 1.153.058 1.72.155.76.135 1.496.34 2.21.614.33.123.654.263.996.404z"/>
                         </svg>
                       </a>
                       <a 
