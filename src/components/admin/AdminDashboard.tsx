@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useAdmin } from '../../contexts/AdminContext';
-import { Music, Video, ShoppingBag, Settings, LogOut } from 'lucide-react';
+import { Music, Video, ShoppingBag, Settings, LogOut, Image } from 'lucide-react';
 import AdminTracks from './AdminTracks';
 import AdminVideos from './AdminVideos';
 import AdminMerch from './AdminMerch';
 import AdminContent from './AdminContent';
+import AdminImages from './AdminImages';
 
-type Tab = 'tracks' | 'videos' | 'merch' | 'content';
+type Tab = 'tracks' | 'videos' | 'merch' | 'content' | 'images';
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<Tab>('tracks');
@@ -15,6 +16,7 @@ export default function AdminDashboard() {
   const tabs = [
     { id: 'tracks' as Tab, label: 'Tracks', icon: Music },
     { id: 'videos' as Tab, label: 'Videos', icon: Video },
+    { id: 'images' as Tab, label: 'Images', icon: Image },
     { id: 'merch' as Tab, label: 'Merch', icon: ShoppingBag },
     { id: 'content' as Tab, label: 'Content', icon: Settings },
   ];
@@ -75,8 +77,8 @@ export default function AdminDashboard() {
                   <span className="text-neon-pink">6</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Merch</span>
-                  <span className="text-neon-pink">8</span>
+                  <span>Images</span>
+                  <span className="text-neon-pink">12</span>
                 </div>
               </div>
             </div>
@@ -86,6 +88,7 @@ export default function AdminDashboard() {
           <div className="lg:col-span-3">
             {activeTab === 'tracks' && <AdminTracks />}
             {activeTab === 'videos' && <AdminVideos />}
+            {activeTab === 'images' && <AdminImages />}
             {activeTab === 'merch' && <AdminMerch />}
             {activeTab === 'content' && <AdminContent />}
           </div>
