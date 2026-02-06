@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Play, X, Clock, Eye, Heart, Share2, Film, Youtube } from 'lucide-react';
+import { Play, Eye, Film, Youtube, X } from 'lucide-react';
 
 interface Video {
   id: number;
@@ -11,6 +11,7 @@ interface Video {
   category: string;
   year: string;
   youtubeUrl: string;
+  videoId: string;
 }
 
 // REAL Saige videos from @saigemusik YouTube channel
@@ -24,7 +25,8 @@ const videos: Video[] = [
     views: "397",
     category: "Music Video",
     year: "2025",
-    youtubeUrl: "https://www.youtube.com/watch?v=Q-t7yioHDCY"
+    youtubeUrl: "https://www.youtube.com/watch?v=Q-t7yioHDCY",
+    videoId: "Q-t7yioHDCY"
   },
   {
     id: 2,
@@ -35,7 +37,8 @@ const videos: Video[] = [
     views: "740",
     category: "Lyric Video",
     year: "2025",
-    youtubeUrl: "https://www.youtube.com/watch?v=O6IEI94SA-I"
+    youtubeUrl: "https://www.youtube.com/watch?v=O6IEI94SA-I",
+    videoId: "O6IEI94SA-I"
   },
   {
     id: 3,
@@ -46,7 +49,8 @@ const videos: Video[] = [
     views: "412",
     category: "Lyric Video",
     year: "2025",
-    youtubeUrl: "https://www.youtube.com/watch?v=02Kq4iVrtQ0"
+    youtubeUrl: "https://www.youtube.com/watch?v=02Kq4iVrtQ0",
+    videoId: "02Kq4iVrtQ0"
   },
   {
     id: 4,
@@ -57,7 +61,8 @@ const videos: Video[] = [
     views: "102",
     category: "Audio",
     year: "2025",
-    youtubeUrl: "https://www.youtube.com/watch?v=uLzElU2UrcQ"
+    youtubeUrl: "https://www.youtube.com/watch?v=uLzElU2UrcQ",
+    videoId: "uLzElU2UrcQ"
   },
   {
     id: 5,
@@ -68,7 +73,8 @@ const videos: Video[] = [
     views: "191",
     category: "Lyric Video",
     year: "2025",
-    youtubeUrl: "https://www.youtube.com/watch?v=vz6N1NsZl5E"
+    youtubeUrl: "https://www.youtube.com/watch?v=vz6N1NsZl5E",
+    videoId: "vz6N1NsZl5E"
   },
   {
     id: 6,
@@ -79,7 +85,8 @@ const videos: Video[] = [
     views: "112",
     category: "Lyric Video",
     year: "2025",
-    youtubeUrl: "https://www.youtube.com/watch?v=Vnk2pK83qGg"
+    youtubeUrl: "https://www.youtube.com/watch?v=Vnk2pK83qGg",
+    videoId: "Vnk2pK83qGg"
   },
 ];
 
@@ -88,10 +95,19 @@ const categories = ["All", "Music Video", "Lyric Video", "Audio"];
 const VideoSection = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [hoveredVideo, setHoveredVideo] = useState<number | null>(null);
+  const [playingVideo, setPlayingVideo] = useState<string | null>(null);
 
   const filteredVideos = activeCategory === "All" 
     ? videos 
     : videos.filter(video => video.category === activeCategory);
+
+  const openVideo = (videoId: string) => {
+    setPlayingVideo(videoId);
+  };
+
+  const closeVideo = () => {
+    setPlayingVideo(null);
+  };
 
   return (
     <section id="videos" className="relative py-32 px-6 lg:px-12">
@@ -105,8 +121,7 @@ const VideoSection = () => {
             Music <span className="gradient-text">Videos</span>
           </h2>
           <p className="font-body text-lg text-white/60 max-w-2xl">
-            Watch the official music videos, lyric videos, and visualizers from Saige. 
-            Subscribe on YouTube for the latest releases.
+            Watch the official music videos, lyric videos, and visualizers from Saige.
           </p>
         </div>
 
@@ -153,15 +168,13 @@ const VideoSection = () => {
         {/* Videos Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredVideos.map((video, index) => (
-            <a
+            <div
               key={video.id}
-              href={video.youtubeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="reveal-scale group relative rounded-2xl overflow-hidden cursor-pointer card-lift block"
+              className="reveal-scale group relative rounded-2xl overflow-hidden cursor-pointer card-lift"
               style={{ transitionDelay: `${index * 0.05}s` }}
               onMouseEnter={() => setHoveredVideo(video.id)}
               onMouseLeave={() => setHoveredVideo(null)}
+              onClick={() => openVideo(video.videoId)}
             >
               {/* Thumbnail */}
               <div className="aspect-video relative">
@@ -212,7 +225,7 @@ const VideoSection = () => {
               <div className={`absolute inset-0 rounded-2xl border-2 transition-all duration-300 pointer-events-none ${
                 hoveredVideo === video.id ? 'border-neon-pink shadow-[0_0_30px_rgba(255,0,110,0.3)]' : 'border-transparent'
               }`} />
-            </a>
+            </div>
           ))}
         </div>
 
@@ -229,6 +242,37 @@ const VideoSection = () => {
           </a>
         </div>
       </div>
+
+      {/* Video Modal with Embedded Player */}
+      {playingVideo && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-4"
+          onClick={closeVideo}
+        >
+          <button 
+            className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-neon-pink transition-colors z-10"
+            onClick={closeVideo}
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          <div 
+            className="relative max-w-5xl w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* YouTube Embed */}
+            <div className="aspect-video bg-black rounded-2xl overflow-hidden">
+              <iframe
+                src={`https://www.youtube.com/embed/${playingVideo}?autoplay=1&rel=0`}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
