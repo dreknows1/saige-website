@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Play, X, Clock, Eye, Heart, Share2, Film, Youtube } from 'lucide-react';
+import { Play, Eye, Film, Youtube } from 'lucide-react';
 
 interface Video {
   id: number;
@@ -13,59 +13,80 @@ interface Video {
   youtubeUrl: string;
 }
 
-// Real Saige videos from YouTube channel
+// Real Saige videos from YouTube channel @saigemusik
 const videos: Video[] = [
   {
     id: 1,
-    title: "Me Gustas - Official Visualizer",
-    description: "Official visualizer for the hit single Me Gustas from Heartbreaks Algorithm",
-    thumbnail: "/assets/images/promo-1.png",
-    duration: "4:19",
-    views: "15.2K",
-    category: "Visualizer",
+    title: "So Dope (Official Music Video)",
+    description: "Official music video for So Dope featuring Noir from Heartbreaks Algorithm",
+    thumbnail: "/assets/images/promo-2.png",
+    duration: "4:35",
+    views: "397",
+    category: "Music Video",
     year: "2025",
-    youtubeUrl: "https://youtube.com/@saigemusik"
+    youtubeUrl: "https://www.youtube.com/watch?v=Q-t7yioHDCY"
   },
   {
     id: 2,
-    title: "So Dope - Official Video",
-    description: "Official music video for So Dope - part of Heartbreaks Algorithm",
-    thumbnail: "/assets/images/promo-2.png",
-    duration: "4:06",
-    views: "13.3K",
-    category: "Music Video",
+    title: "Me Gustas (Lyric Video)",
+    description: "Lyric video for Me Gustas from Heartbreaks Algorithm - 412 views",
+    thumbnail: "/assets/images/promo-1.png",
+    duration: "4:20",
+    views: "412",
+    category: "Lyric Video",
     year: "2025",
-    youtubeUrl: "https://youtube.com/@saigemusik"
+    youtubeUrl: "https://www.youtube.com/watch?v=02Kq4iVrtQ0"
   },
   {
     id: 3,
-    title: "Right There - Live Session",
-    description: "Live studio performance of Right There",
+    title: "Sh*t I Should've Said (Lyric Video)",
+    description: "Lyric video from the debut album Heartbreaks Algorithm",
     thumbnail: "/assets/images/promo-3.png",
-    duration: "3:57",
-    views: "8.9K",
-    category: "Live",
+    duration: "3:46",
+    views: "191",
+    category: "Lyric Video",
     year: "2025",
-    youtubeUrl: "https://youtube.com/@saigemusik"
+    youtubeUrl: "https://www.youtube.com/watch?v=vz6N1NsZl5E"
   },
   {
     id: 4,
-    title: "Act 1: The Birth - Album Teaser",
-    description: "Official teaser for Heartbreaks Algorithm",
+    title: "Claustrophobic (Lyric Video)",
+    description: "Official lyric video from Heartbreaks Algorithm",
     thumbnail: "/assets/images/promo-4.png",
-    duration: "2:30",
-    views: "25K",
-    category: "Teaser",
+    duration: "4:42",
+    views: "54",
+    category: "Lyric Video",
     year: "2025",
-    youtubeUrl: "https://youtube.com/@saigemusik"
+    youtubeUrl: "https://www.youtube.com/watch?v=nDvaaF47ZLk"
+  },
+  {
+    id: 5,
+    title: "Heartbreak's Algorithm - Full Album",
+    description: "Complete debut album from sAIge - 1 hour",
+    thumbnail: "/assets/album-covers/the-audacity.png",
+    duration: "1:00:00",
+    views: "202",
+    category: "Album",
+    year: "2025",
+    youtubeUrl: "https://www.youtube.com/watch?v=NPy753Maugg"
+  },
+  {
+    id: 6,
+    title: "You Lie So Good (Lyric Video)",
+    description: "From the debut album Heartbreaks Algorithm",
+    thumbnail: "/assets/images/promo-5.png",
+    duration: "4:11",
+    views: "740",
+    category: "Lyric Video",
+    year: "2025",
+    youtubeUrl: "https://www.youtube.com/watch?v=O6IEI94SA-I"
   },
 ];
 
-const categories = ["All", "Music Video", "Visualizer", "Live", "Teaser"];
+const categories = ["All", "Music Video", "Lyric Video", "Album"];
 
 const VideoSection = () => {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [hoveredVideo, setHoveredVideo] = useState<number | null>(null);
 
   const filteredVideos = activeCategory === "All" 
@@ -84,7 +105,7 @@ const VideoSection = () => {
             Music <span className="gradient-text">Videos</span>
           </h2>
           <p className="font-body text-lg text-white/60 max-w-2xl">
-            Watch the official visualizers, music videos, and live performances from Saige. 
+            Watch the official music videos, lyric videos, and full album from Saige. 
             Subscribe on YouTube for the latest releases.
           </p>
         </div>
@@ -104,7 +125,7 @@ const VideoSection = () => {
               <h3 className="font-display text-xl font-bold text-white group-hover:text-red-400 transition-colors">
                 Subscribe on YouTube
               </h3>
-              <p className="font-body text-white/60">@saigemusik - Official channel with all music videos and exclusive content</p>
+              <p className="font-body text-white/60">@saigemusik - 239 subscribers • 108 videos</p>
             </div>
             <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-red-500/20 transition-colors">
               <Play className="w-5 h-5 text-white group-hover:text-red-400 transition-colors" />
@@ -132,13 +153,15 @@ const VideoSection = () => {
         {/* Videos Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredVideos.map((video, index) => (
-            <div
+            <a
               key={video.id}
-              className="reveal-scale group relative rounded-2xl overflow-hidden cursor-pointer card-lift"
+              href={video.youtubeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="reveal-scale group relative rounded-2xl overflow-hidden cursor-pointer card-lift block"
               style={{ transitionDelay: `${index * 0.05}s` }}
               onMouseEnter={() => setHoveredVideo(video.id)}
               onMouseLeave={() => setHoveredVideo(null)}
-              onClick={() => setSelectedVideo(video)}
             >
               {/* Thumbnail */}
               <div className="aspect-video relative">
@@ -177,7 +200,7 @@ const VideoSection = () => {
                     <div className="flex items-center gap-4 font-tech text-xs text-white/40">
                       <span className="flex items-center gap-1">
                         <Eye className="w-3 h-3" />
-                        {video.views}
+                        {video.views} views
                       </span>
                       <span>{video.year}</span>
                     </div>
@@ -189,7 +212,7 @@ const VideoSection = () => {
               <div className={`absolute inset-0 rounded-2xl border-2 transition-all duration-300 pointer-events-none ${
                 hoveredVideo === video.id ? 'border-neon-pink shadow-[0_0_30px_rgba(255,0,110,0.3)]' : 'border-transparent'
               }`} />
-            </div>
+            </a>
           ))}
         </div>
 
@@ -201,80 +224,11 @@ const VideoSection = () => {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-8 py-4 border border-white/20 text-white font-tech text-sm tracking-widest uppercase hover:border-red-500 hover:text-red-400 transition-all duration-300 rounded-full"
           >
-            View All Videos on YouTube
+            View All 108 Videos on YouTube
             <Youtube className="w-4 h-4" />
           </a>
         </div>
       </div>
-
-      {/* Video Modal */}
-      {selectedVideo && (
-        <div 
-          className="fixed inset-0 z-50 bg-void/95 backdrop-blur-xl flex items-center justify-center p-6"
-          onClick={() => setSelectedVideo(null)}
-        >
-          <button 
-            className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-neon-pink transition-colors z-10"
-            onClick={() => setSelectedVideo(null)}
-          >
-            <X className="w-6 h-6" />
-          </button>
-
-          <div 
-            className="relative max-w-5xl w-full"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Video Player Placeholder */}
-            <div className="aspect-video bg-black rounded-2xl overflow-hidden relative">
-              <img 
-                src={selectedVideo.thumbnail}
-                alt={selectedVideo.title}
-                className="w-full h-full object-cover opacity-50"
-              />
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <a 
-                  href={selectedVideo.youtubeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-20 h-20 rounded-full bg-red-500 flex items-center justify-center hover:scale-110 transition-transform mb-4"
-                >
-                  <Play className="w-8 h-8 text-white ml-1" />
-                </a>
-                <p className="font-tech text-sm text-white/60">Watch on YouTube</p>
-              </div>
-            </div>
-
-            {/* Video Info */}
-            <div className="mt-6 flex items-start justify-between">
-              <div>
-                <h3 className="font-display text-2xl font-bold text-white mb-2">
-                  {selectedVideo.title}
-                </h3>
-                <p className="font-body text-white/60 mb-4">{selectedVideo.description}</p>
-                <div className="flex items-center gap-6 font-tech text-sm text-white/40">
-                  <span className="flex items-center gap-2">
-                    <Eye className="w-4 h-4" />
-                    {selectedVideo.views} views
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <Clock className="w-4 h-4" />
-                    {selectedVideo.duration}
-                  </span>
-                  <span>{selectedVideo.year}</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <button className="p-3 rounded-full bg-white/10 hover:bg-neon-pink/20 transition-colors">
-                  <Heart className="w-5 h-5 text-white" />
-                </button>
-                <button className="p-3 rounded-full bg-white/10 hover:bg-neon-pink/20 transition-colors">
-                  <Share2 className="w-5 h-5 text-white" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 };

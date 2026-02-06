@@ -2,9 +2,9 @@ import { MapPin, Music, Headphones, Star, Radio, Sparkles } from 'lucide-react';
 
 const stats = [
   { value: "3,541", label: "Monthly Listeners" },
-  { value: "12K+", label: "Streams" },
-  { value: "16", label: "Tracks Released" },
-  { value: "4", label: "Projects" }
+  { value: "239", label: "YouTube Subscribers" },
+  { value: "108", label: "Videos" },
+  { value: "16", label: "Tracks" }
 ];
 
 const features = [

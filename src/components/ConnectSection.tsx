@@ -8,7 +8,7 @@ const socialLinks = [
     href: 'https://youtube.com/@saigemusik', 
     color: 'hover:text-red-500 hover:border-red-500',
     bgColor: 'group-hover:bg-red-500/20',
-    followers: '25K+ Subscribers'
+    followers: '239 Subscribers • 108 Videos'
   },
   { 
     name: 'Instagram', 
@@ -16,7 +16,7 @@ const socialLinks = [
     href: 'https://instagram.com/saigemusik', 
     color: 'hover:text-pink-500 hover:border-pink-500',
     bgColor: 'group-hover:bg-pink-500/20',
-    followers: '45K+ Followers'
+    followers: '@saigemusik'
   },
   { 
     name: 'TikTok', 
@@ -28,7 +28,7 @@ const socialLinks = [
     href: 'https://tiktok.com/@saigemusik', 
     color: 'hover:text-white hover:border-white',
     bgColor: 'group-hover:bg-white/10',
-    followers: '100K+ Followers'
+    followers: '@saigemusik'
   },
   { 
     name: 'Facebook', 
@@ -36,7 +36,7 @@ const socialLinks = [
     href: 'https://facebook.com/saigemusik', 
     color: 'hover:text-blue-500 hover:border-blue-500',
     bgColor: 'group-hover:bg-blue-500/20',
-    followers: '12K+ Followers'
+    followers: '@saigemusik'
   },
   { 
     name: 'Spotify', 
@@ -44,7 +44,7 @@ const socialLinks = [
     href: 'https://open.spotify.com/artist/1mmsdJrB5LrN18iDTRQgDK', 
     color: 'hover:text-green-500 hover:border-green-500',
     bgColor: 'group-hover:bg-green-500/20',
-    followers: '50K+ Monthly Listeners'
+    followers: '3,541 Monthly Listeners'
   },
   { 
     name: 'Twitter', 
@@ -52,7 +52,7 @@ const socialLinks = [
     href: 'https://twitter.com/saigemusik', 
     color: 'hover:text-blue-400 hover:border-blue-400',
     bgColor: 'group-hover:bg-blue-400/20',
-    followers: '18K+ Followers'
+    followers: '@saigemusik'
   },
 ];
 
