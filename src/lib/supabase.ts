@@ -3,7 +3,10 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+// Only create client if credentials exist
+export const supabase = supabaseUrl && supabaseKey 
+  ? createClient(supabaseUrl, supabaseKey)
+  : null as any;
 
 export type Track = {
   id: number;
@@ -56,8 +59,19 @@ export type SiteContent = {
   section: string;
 };
 
+// Mock data for when Supabase isn't configured
+const mockTracks: Track[] = [
+  { id: 1, track_id: 'me-gustas', title: 'Me Gustas', album: 'Heartbreaks Algorithm', duration: '2:44', plays: '100K+', spotify_url: '#', apple_url: '#', audio_url: '', price: 0.99, track_number: 1, is_active: true },
+  { id: 2, track_id: 'so-dope', title: 'So Dope', album: 'Heartbreaks Algorithm', duration: '2:50', plays: '75K+', spotify_url: '#', apple_url: '#', audio_url: '', price: 0.99, track_number: 2, is_active: true },
+];
+
+const mockVideos: Video[] = [
+  { id: 1, video_id: 'so-dope-video', title: 'So Dope (Official Music Video)', description: '', youtube_url: 'https://youtube.com/watch?v=O6IEI94SA-I', thumbnail: '', duration: '2:50', views: '740', category: 'Music Video', year: '2025', is_active: true },
+];
+
 // Fetch all active tracks
 export async function getTracks(): Promise<Track[]> {
+  if (!supabase) return mockTracks;
   const { data, error } = await supabase
     .from('tracks')
     .select('*')
@@ -65,11 +79,12 @@ export async function getTracks(): Promise<Track[]> {
     .order('track_number');
   
   if (error) throw error;
-  return data || [];
+  return data || mockTracks;
 }
 
 // Fetch all active videos
 export async function getVideos(): Promise<Video[]> {
+  if (!supabase) return mockVideos;
   const { data, error } = await supabase
     .from('videos')
     .select('*')
@@ -77,11 +92,12 @@ export async function getVideos(): Promise<Video[]> {
     .order('id');
   
   if (error) throw error;
-  return data || [];
+  return data || mockVideos;
 }
 
 // Fetch all active merch
 export async function getMerch(): Promise<MerchProduct[]> {
+  if (!supabase) return [];
   const { data, error } = await supabase
     .from('merch')
     .select('*')
@@ -94,6 +110,7 @@ export async function getMerch(): Promise<MerchProduct[]> {
 
 // Fetch site content
 export async function getSiteContent(): Promise<Record<string, string>> {
+  if (!supabase) return {};
   const { data, error } = await supabase
     .from('site_content')
     .select('*');
@@ -101,25 +118,32 @@ export async function getSiteContent(): Promise<Record<string, string>> {
   if (error) throw error;
   
   const content: Record<string, string> = {};
-  data?.forEach(item => {
+  data?.forEach((item: SiteContent) => {
     content[item.key] = item.value;
   });
   
   return content;
 }
 
-// Admin auth
+// Admin auth - mock for now
 export async function adminLogin(email: string, password: string) {
+  if (!supabase) {
+    // Mock login
+    if (email === 'admin@saigemusik.com' && password === 'admin123') {
+      return { id: '1', email, name: 'Admin' };
+    }
+    throw new Error('Invalid credentials');
+  }
+  
   const { data, error } = await supabase
     .from('admin_users')
     .select('*')
     .eq('email', email)
-    .eq('password_hash', password) // In production, use proper hashing
+    .eq('password_hash', password)
     .single();
   
   if (error || !data) throw new Error('Invalid credentials');
   
-  // Update last login
   await supabase
     .from('admin_users')
     .update({ last_login: new Date().toISOString() })
@@ -130,6 +154,7 @@ export async function adminLogin(email: string, password: string) {
 
 // Update track (admin)
 export async function updateTrack(trackId: string, updates: Partial<Track>) {
+  if (!supabase) throw new Error('Supabase not configured');
   const { data, error } = await supabase
     .from('tracks')
     .update(updates)
@@ -143,6 +168,7 @@ export async function updateTrack(trackId: string, updates: Partial<Track>) {
 
 // Update video (admin)
 export async function updateVideo(videoId: string, updates: Partial<Video>) {
+  if (!supabase) throw new Error('Supabase not configured');
   const { data, error } = await supabase
     .from('videos')
     .update(updates)
@@ -156,6 +182,7 @@ export async function updateVideo(videoId: string, updates: Partial<Video>) {
 
 // Update merch (admin)
 export async function updateMerch(productId: string, updates: Partial<MerchProduct>) {
+  if (!supabase) throw new Error('Supabase not configured');
   const { data, error } = await supabase
     .from('merch')
     .update(updates)
@@ -169,6 +196,7 @@ export async function updateMerch(productId: string, updates: Partial<MerchProdu
 
 // Update site content (admin)
 export async function updateSiteContent(key: string, value: string) {
+  if (!supabase) throw new Error('Supabase not configured');
   const { data, error } = await supabase
     .from('site_content')
     .update({ value, updated_at: new Date().toISOString() })
