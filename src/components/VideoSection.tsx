@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Play, Eye, Film, Youtube } from 'lucide-react';
+import { Play, X, Clock, Eye, Heart, Share2, Film, Youtube } from 'lucide-react';
 
 interface Video {
   id: number;
@@ -13,13 +13,13 @@ interface Video {
   youtubeUrl: string;
 }
 
-// Real Saige videos from YouTube channel @saigemusik
+// REAL Saige videos from @saigemusik YouTube channel
 const videos: Video[] = [
   {
     id: 1,
     title: "So Dope (Official Music Video)",
-    description: "Official music video for So Dope featuring Noir from Heartbreaks Algorithm",
-    thumbnail: "/assets/images/promo-2.png",
+    description: "Official music video for So Dope featuring Noir",
+    thumbnail: "/assets/images/promo-1.png",
     duration: "4:35",
     views: "397",
     category: "Music Video",
@@ -28,9 +28,20 @@ const videos: Video[] = [
   },
   {
     id: 2,
+    title: "So Dope (Lyric Video)",
+    description: "Lyric video for So Dope from Heartbreaks Algorithm",
+    thumbnail: "/assets/images/promo-2.png",
+    duration: "4:11",
+    views: "740",
+    category: "Lyric Video",
+    year: "2025",
+    youtubeUrl: "https://www.youtube.com/watch?v=O6IEI94SA-I"
+  },
+  {
+    id: 3,
     title: "Me Gustas (Lyric Video)",
-    description: "Lyric video for Me Gustas from Heartbreaks Algorithm - 412 views",
-    thumbnail: "/assets/images/promo-1.png",
+    description: "Lyric video for Me Gustas from Heartbreaks Algorithm",
+    thumbnail: "/assets/images/promo-3.png",
     duration: "4:20",
     views: "412",
     category: "Lyric Video",
@@ -38,10 +49,21 @@ const videos: Video[] = [
     youtubeUrl: "https://www.youtube.com/watch?v=02Kq4iVrtQ0"
   },
   {
-    id: 3,
+    id: 4,
+    title: "Me Gustas (Official Audio)",
+    description: "Official audio for Me Gustas",
+    thumbnail: "/assets/images/promo-4.png",
+    duration: "4:21",
+    views: "102",
+    category: "Audio",
+    year: "2025",
+    youtubeUrl: "https://www.youtube.com/watch?v=uLzElU2UrcQ"
+  },
+  {
+    id: 5,
     title: "Sh*t I Should've Said (Lyric Video)",
-    description: "Lyric video from the debut album Heartbreaks Algorithm",
-    thumbnail: "/assets/images/promo-3.png",
+    description: "Lyric video from Heartbreaks Algorithm",
+    thumbnail: "/assets/images/promo-5.png",
     duration: "3:46",
     views: "191",
     category: "Lyric Video",
@@ -49,41 +71,19 @@ const videos: Video[] = [
     youtubeUrl: "https://www.youtube.com/watch?v=vz6N1NsZl5E"
   },
   {
-    id: 4,
-    title: "Claustrophobic (Lyric Video)",
-    description: "Official lyric video from Heartbreaks Algorithm",
-    thumbnail: "/assets/images/promo-4.png",
-    duration: "4:42",
-    views: "54",
-    category: "Lyric Video",
-    year: "2025",
-    youtubeUrl: "https://www.youtube.com/watch?v=nDvaaF47ZLk"
-  },
-  {
-    id: 5,
-    title: "Heartbreak's Algorithm - Full Album",
-    description: "Complete debut album from sAIge - 1 hour",
-    thumbnail: "/assets/album-covers/the-audacity.png",
-    duration: "1:00:00",
-    views: "202",
-    category: "Album",
-    year: "2025",
-    youtubeUrl: "https://www.youtube.com/watch?v=NPy753Maugg"
-  },
-  {
     id: 6,
     title: "You Lie So Good (Lyric Video)",
-    description: "From the debut album Heartbreaks Algorithm",
-    thumbnail: "/assets/images/promo-5.png",
-    duration: "4:11",
-    views: "740",
+    description: "Lyric video from Heartbreaks Algorithm",
+    thumbnail: "/assets/images/promo-6.png",
+    duration: "4:18",
+    views: "112",
     category: "Lyric Video",
     year: "2025",
-    youtubeUrl: "https://www.youtube.com/watch?v=O6IEI94SA-I"
+    youtubeUrl: "https://www.youtube.com/watch?v=Vnk2pK83qGg"
   },
 ];
 
-const categories = ["All", "Music Video", "Lyric Video", "Album"];
+const categories = ["All", "Music Video", "Lyric Video", "Audio"];
 
 const VideoSection = () => {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -105,7 +105,7 @@ const VideoSection = () => {
             Music <span className="gradient-text">Videos</span>
           </h2>
           <p className="font-body text-lg text-white/60 max-w-2xl">
-            Watch the official music videos, lyric videos, and full album from Saige. 
+            Watch the official music videos, lyric videos, and visualizers from Saige. 
             Subscribe on YouTube for the latest releases.
           </p>
         </div>
@@ -125,7 +125,7 @@ const VideoSection = () => {
               <h3 className="font-display text-xl font-bold text-white group-hover:text-red-400 transition-colors">
                 Subscribe on YouTube
               </h3>
-              <p className="font-body text-white/60">@saigemusik - 239 subscribers • 108 videos</p>
+              <p className="font-body text-white/60">@saigemusik - 108 videos, 239 subscribers</p>
             </div>
             <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-red-500/20 transition-colors">
               <Play className="w-5 h-5 text-white group-hover:text-red-400 transition-colors" />
@@ -200,7 +200,7 @@ const VideoSection = () => {
                     <div className="flex items-center gap-4 font-tech text-xs text-white/40">
                       <span className="flex items-center gap-1">
                         <Eye className="w-3 h-3" />
-                        {video.views} views
+                        {video.views}
                       </span>
                       <span>{video.year}</span>
                     </div>
