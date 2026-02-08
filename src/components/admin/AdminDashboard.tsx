@@ -1,26 +1,26 @@
 import { useState } from 'react';
 import { useAdmin } from '../../contexts/AdminContext';
-import { Music, Video, ShoppingBag, LogOut, Image, Layout, Eye, ChevronRight, Type } from 'lucide-react';
+import { Music, Video, ShoppingBag, Settings, LogOut, Image, Layout, Eye, ChevronRight } from 'lucide-react';
 import AdminTracks from './AdminTracks';
 import AdminVideos from './AdminVideos';
+import AdminMerch from './AdminMerch';
 import AdminImages from './AdminImages';
 import AdminSiteBuilder from './AdminSiteBuilder';
 import AdminContent from './AdminContent';
-import AdminMerch from './AdminMerch';
 
-type Tab = 'builder' | 'content' | 'tracks' | 'videos' | 'merch' | 'images';
+type Tab = 'builder' | 'tracks' | 'videos' | 'merch' | 'images' | 'settings';
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<Tab>('builder');
   const { admin, logout } = useAdmin();
 
   const tabs = [
-    { id: 'builder' as Tab, label: 'Site Builder', icon: Layout, description: 'Edit sections' },
-    { id: 'content' as Tab, label: 'Content', icon: Type, description: 'Site info' },
+    { id: 'builder' as Tab, label: 'Site Builder', icon: Layout, description: 'Edit all sections' },
     { id: 'tracks' as Tab, label: 'Tracks', icon: Music, description: 'Music catalog' },
     { id: 'videos' as Tab, label: 'Videos', icon: Video, description: 'YouTube videos' },
     { id: 'images' as Tab, label: 'Images', icon: Image, description: 'Media library' },
     { id: 'merch' as Tab, label: 'Merch', icon: ShoppingBag, description: 'Products' },
+    { id: 'settings' as Tab, label: 'Settings', icon: Settings, description: 'Site config' },
   ];
 
   return (
@@ -36,11 +36,21 @@ export default function AdminDashboard() {
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <a href="/#" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-neon-pink/20 text-neon-pink rounded-lg hover:bg-neon-pink/30 transition-colors font-tech text-sm">
-              <Eye className="w-4 h-4" /> View Site
+            <a
+              href="/#"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 bg-neon-pink/20 text-neon-pink rounded-lg hover:bg-neon-pink/30 transition-colors font-tech text-sm"
+            >
+              <Eye className="w-4 h-4" />
+              View Site
             </a>
-            <button onClick={logout} className="flex items-center gap-2 px-4 py-2 text-white/60 hover:text-white transition-colors font-tech text-sm">
-              <LogOut className="w-4 h-4" /> Logout
+            <button
+              onClick={logout}
+              className="flex items-center gap-2 px-4 py-2 text-white/60 hover:text-white transition-colors font-tech text-sm"
+            >
+              <LogOut className="w-4 h-4" />
+              Logout
             </button>
           </div>
         </div>
@@ -74,11 +84,11 @@ export default function AdminDashboard() {
 
         <main className="flex-1 overflow-y-auto p-6">
           {activeTab === 'builder' && <AdminSiteBuilder />}
-          {activeTab === 'content' && <AdminContent />}
           {activeTab === 'tracks' && <AdminTracks />}
           {activeTab === 'videos' && <AdminVideos />}
           {activeTab === 'images' && <AdminImages />}
           {activeTab === 'merch' && <AdminMerch />}
+          {activeTab === 'settings' && <AdminContent />}
         </main>
       </div>
     </div>
